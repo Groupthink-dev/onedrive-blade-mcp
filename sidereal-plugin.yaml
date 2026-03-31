@@ -1,0 +1,50 @@
+name: onedrive-blade-mcp
+version: "0.1.0"
+description: "OneDrive & SharePoint file operations via Microsoft Graph API"
+author: piersdd
+licence: MIT
+tier: certified
+homepage: https://github.com/groupthink-dev/onedrive-blade-mcp
+contract: drive-v1
+
+services:
+  drive:
+    list: drive_list
+    read: drive_read
+    search: drive_search
+    download: drive_download
+    upload: drive_upload
+    move: drive_move
+    delete: drive_delete
+    share: drive_share
+
+install:
+  runtime: uv
+  package: onedrive-blade-mcp
+  command: onedrive-blade-mcp
+
+env:
+  - name: ONEDRIVE_TENANT_ID
+    description: "Azure AD tenant ID"
+    secret: false
+  - name: ONEDRIVE_CLIENT_ID
+    description: "Azure AD app client ID"
+    secret: true
+  - name: ONEDRIVE_CLIENT_SECRET
+    description: "Azure AD app client secret (optional)"
+    secret: true
+  - name: ONEDRIVE_AUTH_MODE
+    description: "Auth mode: device_code or client_credentials"
+    default: "device_code"
+  - name: ONEDRIVE_WRITE_ENABLED
+    description: "Enable write operations (upload, move, delete, share)"
+    default: "false"
+
+requires:
+  sidereal: ">=0.3.0"
+
+conformance:
+  required: "3/3"
+  recommended: "1/1"
+  optional: "0/0"
+  last_tested: "2026-03-31"
