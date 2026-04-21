@@ -1,6 +1,6 @@
 [project]
 name = "onedrive-blade-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "OneDrive & SharePoint MCP Server — files, search, and sharing via Microsoft Graph API"
 readme = "README.md"
 license = {text = "MIT"}
