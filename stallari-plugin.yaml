@@ -2,7 +2,7 @@ name: onedrive-blade-mcp
 version: "0.1.1"
 description: "OneDrive & SharePoint file operations via Microsoft Graph API"
 author: piersdd
-licence: MIT
+license: MIT
 tier: certified
 homepage: https://github.com/groupthink-dev/onedrive-blade-mcp
 contract: drive-v1
