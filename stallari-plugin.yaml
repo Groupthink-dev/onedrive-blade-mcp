@@ -1,22 +1,47 @@
 name: onedrive-blade-mcp
-version: "0.1.1"
+version: "0.2.0"
 description: "OneDrive & SharePoint file operations via Microsoft Graph API"
 author: piersdd
 license: MIT
 tier: certified
 homepage: https://github.com/groupthink-dev/onedrive-blade-mcp
-contract: drive-v1
+
+# DD-181 Wave 2: drive-v1 (8 ops) was retired and replaced by file-storage-v1
+# (14 ops, hierarchical file storage). Service slot also renamed drive →
+# file_storage so it doesn't collide with authoritative DNS.
+contract: file-storage-v1
 
 services:
-  drive:
+  file_storage:
     list: drive_list
     read: drive_read
-    search: drive_search
-    download: drive_download
-    upload: drive_upload
-    move: drive_move
+    write: drive_upload
     delete: drive_delete
-    share: drive_share
+    get_metadata: drive_metadata
+    folder_create: drive_create_folder
+    move: drive_move
+    search: drive_search
+    changes_since: drive_delta
+    share_link_create: drive_share
+
+# Operations not implemented by this blade.
+not_supported:
+  file-storage-v1:
+    - copy                  # Graph API supports it but not yet wired
+    - append                # OneDrive does not support content append
+    - folder_delete         # destructive folder ops deferred
+    - share_link_delete     # not implemented
+
+# Native tools not covered by the v1 contract.
+native_tools:
+  - drive_info
+  - drive_versions
+  - drive_thumbnail
+  - drive_sites
+  - drive_site_libraries
+  - drive_site_list
+  - drive_download
+  - drive_permissions
 
 install:
   runtime: uv
@@ -41,10 +66,12 @@ env:
     default: "false"
 
 requires:
-  sidereal: ">=0.3.0"
+  stallari: ">=0.73.4"
 
 conformance:
-  required: "3/3"
-  recommended: "1/1"
-  optional: "0/0"
-  last_tested: "2026-03-31"
+  file-storage-v1:
+    required: "4/4"
+    recommended: "3/4"
+    optional: "2/3"
+    gated: "1/3"
+  last_tested: "2026-04-28"
