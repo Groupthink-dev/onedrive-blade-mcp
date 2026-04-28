@@ -16,4 +16,3 @@ htmlcov/
 *.log
 .venv/
 .uv/
-uv.lock
