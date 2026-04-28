@@ -22,6 +22,15 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
+      - name: Verify tag matches pyproject.toml version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          PKG="$(grep -E '^version = ' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Tag v$TAG does not match pyproject.toml version $PKG"
+            exit 1
+          fi
+
       - name: Build distribution
         run: uv build
 
